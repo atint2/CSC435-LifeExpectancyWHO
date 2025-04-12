@@ -1,0 +1,360 @@
+---
+title: "CSC435-LifeExpectancy"
+---
+
+```{r}
+# Variation of Country
+# Number of years of data for each country
+# Do we want to keep the countries that only have one observation (one year) to go off of? Thinking of deletion
+LifeExpectancyWHO %>% 
+  count(Country) %>% 
+  arrange(n)
+```
+
+```{r}
+# Variation of Status
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=Status)) + 
+  geom_bar()
+
+LifeExpectancyWHO %>% 
+  count(Status)
+```
+
+```{r}
+# Variation of LifeExpectancy
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=LifeExpectancy)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(LifeExpectancy, 3))
+```
+
+```{r}
+# Variatiom of AdultMortalityPer1000
+# Probability of death between 15 and 60 years per 1000 population
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=AdultMortalityPer1000)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(AdultMortalityPer1000, 50))
+
+```
+
+```{r}
+# Variation of InfantDeathsPer1000
+# Number of infant deaths per 1000 population
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=InfantDeathsPer1000)) +
+  geom_histogram() +
+  coord_cartesian(ylim=c(0,20)) # To view outliers: Anything past 1000 is an outlier
+
+LifeExpectancyWHO %>% 
+  count(cut_width(InfantDeathsPer1000, 50))
+
+# Average # of liters of alcohol consumed per capita in the dataset
+mean(LifeExpectancyWHO$AlcoholConsumption, na.rm = TRUE)
+```
+
+```{r}
+# Variation of AlcoholConsumption
+# Alcohol per capita (15+) consumption (in liters)
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=AlcoholConsumption)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(AlcoholConsumption, 1))
+```
+
+```{r}
+# Variation of GDPExpenditure
+# Expenditure on health as a percentage of Gross Domestic Product per capita
+# Need to scale this attribute
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=GDPExpenditure)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(GDPExpenditure, 500))
+```
+
+```{r}
+# Variation of HepBImmun1yo
+# Hepatitis B (HepB) immunization coverage among 1-year-olds (%)
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=HepBImmun1yo)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(HepBImmun1yo, 5))
+```
+
+```{r}
+# Variation of MeaslesPer1000
+# Measles - number of reported cases per 1000 population
+# Values out of wack
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=MeaslesPer1000)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(MeaslesPer1000, 50))
+```
+
+```{r}
+# Variation of BMI
+# Many values that are not possible (e.g., min=1)
+# These outliers should be excluded from any calculations
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=BMI)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(BMI, 1))
+
+# Min BMI
+min(LifeExpectancyWHO$BMI, na.rm = TRUE)
+# Max BMI
+max(LifeExpectancyWHO$BMI, na.rm = TRUE)
+# Mean BMI
+mean(LifeExpectancyWHO$BMI, na.rm = TRUE)
+```
+
+```{r}
+# Variation of UnderFiveDeathsPer1000
+# Number of under-five-deaths per 1000
+# Values extend past 1000 - need to fix
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=UnderFiveDeathsPer1000)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(UnderFiveDeathsPer1000, 50))
+```
+
+```{r}
+# Variation of Pol3Immun1yo
+# Polio (Pol3) immunization coverage among 1-year-olds (%)
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=Pol3Immun1yo)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(Pol3Immun1yo, 5))
+```
+
+```{r}
+# Variation of TotalExpenditure
+# General government expenditure on health as a percentage of total government expenditure (%)
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=TotalExpenditure)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(TotalExpenditure, 2))
+```
+
+```{r}
+# Variation of DTP3Immun1yo
+# Diphtheria tetanus toxoid and pertussis (DTP3) immunization coverage among 1-year-olds (%)
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=DTP3Immun1yo)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(DTP3Immun1yo, 5))
+```
+
+```{r}
+# Variation of HIV.AIDS 
+# Deaths per 1000 live births HIV/AIDS (0-4 years)
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=HIV.AIDS)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(HIV.AIDS, 5))
+```
+
+```{r}
+# Variation of GDP
+# Gross Domestic Product per capita (USD)
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=GDP)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(GDP, 25000))
+```
+
+```{r}
+# Variation of Population
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=Population)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(Population, 5000000))
+```
+
+```{r}
+# Variation of ThinnessAdolescents
+# Prevalence of thinness among children and adolescents for Age 10 to 19 (%)
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=ThinnessAdolescents)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(ThinnessAdolescents, 5))
+```
+
+```{r}
+# Variation of ThinnessChildren
+# Prevalence of thinness among children for Age 5 to 9 (%)
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=ThinnessChildren)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(ThinnessChildren, 5))
+```
+
+```{r}
+# Variation of HUmanDevIndex
+# Human Development Index in terms of income composition of resources (index ranging from 0 to 1)
+# Convert to %
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=HumanDevIndex)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(HumanDevIndex, .05))
+```
+
+```{r}
+# Variation of Schooling
+# Number of years of schooling
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=Schooling)) +
+  geom_histogram()
+
+LifeExpectancyWHO %>% 
+  count(cut_width(Schooling, 1))
+```
+
+```{r}
+# Is there a relationship in the data between a country's status and life expectancy?
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=Status, y=LifeExpectancy)) +
+  geom_boxplot() +
+  labs(title="Exploration of Life Expectancy based on Status",
+       x="Status", y="Life Expectancy")
+```
+
+```{r}
+# Does life expectancy change over time, or is it fairly steady?
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=Year, y=LifeExpectancy)) +
+  geom_point()
+```
+
+```{r}
+# Is there any covariance between disease rates and life expectancy?
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=HIV.AIDS, y=LifeExpectancy)) +
+  geom_point()
+```
+
+```{r}
+# Have measles rates changed over time?
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=Year, y=MeaslesPer1000)) +
+  geom_point()
+```
+
+```{r}
+# How does the rate of Hepatitis B immunizations among 1-year-olds correlate with infant deaths?
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=InfantDeathsPer1000, y=HepBImmun1yo)) +
+  geom_point()
+
+# What about under five deaths?
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=UnderFiveDeathsPer1000, y=HepBImmun1yo)) +
+  geom_point()
+
+# Adult deaths?
+# No effect
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=AdultMortalityPer1000, y=HepBImmun1yo)) +
+  geom_point()
+```
+
+```{r}
+# How does the rate of Polio immunizations among 1-year-olds correlate with infant deaths?
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=InfantDeathsPer1000, y=Pol3Immun1yo)) +
+  geom_point()
+
+# What about under five deaths?
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=UnderFiveDeathsPer1000, y=Pol3Immun1yo)) +
+  geom_point()
+
+# Adult deaths?
+# No effect
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=AdultMortalityPer1000, y=Pol3Immun1yo)) +
+  geom_point()
+```
+
+```{r}
+# How does the rate of Diphtheria tetanus toxoid and pertussis immunizations among 1-year-olds correlate with infant deaths?
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=InfantDeathsPer1000, y=DTP3Immun1yo)) +
+  geom_point()
+
+# What about under five deaths?
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=UnderFiveDeathsPer1000, y=DTP3Immun1yo)) +
+  geom_point()
+
+# Adult deaths?
+# No effect
+LifeExpectancyWHO %>% 
+  ggplot(aes(x=AdultMortalityPer1000, y=DTP3Immun1yo)) +
+  geom_point()
+```
+
+```{r}
+# Create summary table for all variables
+
+# Function to summarize a single variable (column)
+summarise_column <- function(column, name) {
+  data <- LifeExpectancyWHO[[name]]
+  tibble(
+    Column = name,
+    N = sum(!is.na(data)),
+    `N Missing` = sum(is.na(data)),
+    `N Categories` = n_distinct(data, na.rm = TRUE),
+    Min = if (is.numeric(data)) min(data, na.rm = TRUE) else NA,
+    Max = if (is.numeric(data)) max(data, na.rm = TRUE) else NA,
+    Mean = if (is.numeric(data)) mean(data, na.rm = TRUE) else NA,
+    `Std Dev` = if (is.numeric(data)) sd(data, na.rm = TRUE) else NA
+  )
+}
+
+# Apply the summarizing function to all columns
+summ_LifeExpectancyWHO <- map_dfr(names(LifeExpectancyWHO), ~ summarise_column(LifeExpectancyWHO[[.x]], .x))
+```
+
+```{r}
+# Find the number of observations for each country (Number of years of data)
+# 10 Countries only have 1 observation - DELETE?
+LifeExpectancyWHO %>% 
+  count(Country) %>% 
+  arrange(n)
+```
